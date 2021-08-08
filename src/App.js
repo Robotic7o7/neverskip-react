@@ -1,23 +1,46 @@
 import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Nav from './components/nav/nav';
+import LoginPage from './pages/login-page/login';
+import JoinClass from './pages/join-class-page/join-class';
+import HomePage from './pages/home-page/home';
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [displayName, setDisplayName] = useState('')
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route exact path="/join-class">
+            <Nav
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              displayName={displayName}
+            />
+           <JoinClass/>
+          </Route>
+          <Route exact path="/home">
+            <Nav
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              displayName={displayName}
+            />
+           <HomePage/>
+          </Route>
+          <Route exact path="/">
+            <LoginPage
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              setDisplayName={setDisplayName}
+            />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
